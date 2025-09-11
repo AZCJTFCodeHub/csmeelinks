@@ -27,7 +27,7 @@ https://attack.mitre.org/techniques/T1078/003/
 ```http
 https://mitre-attack.github.io/attack-navigator/
 ```
-5. Run the exploit with the below command (don't do this for now, this is only for your reference):
+5. Run the exploit with the below command (this is optional if you would prefer to not run this on your system. You can still do follow on steps, you may not see all expected results).
 ```powershell
 Invoke-AtomicTest T1078.003
 ```
@@ -60,10 +60,24 @@ C:\Working\zimmerman\net9\MFTECmd.exe -f 'c:\$mft' --csv c:\working\MFTEOutput
 ```powershell
 Import-Csv -Path (Get-ChildItem C:\working\MFTEOutput -Filter *.csv | Sort-Object LastWriteTime -Descending | Select-Object -First 1).FullName | Out-Gridview
 ```
-1. Use timeline explorer to view the results in a friendlier way.
+2. Use timeline explorer to view the results in a friendlier way.
 ```powershell
 C:\Working\Zimmerman\Net9\TimelineExplorer.exe
 ```
+3. Group the view by file extension by dragging the extension column to the header bar. On the right hand side, search for ps1.
+4. Explore the interface for familiararity.
+5. Close out timeline explorer.
+
+6. Use Registry Explorer to look at registry.
+```powershell
+C:\Working\Zimmerman\Net9\RegistryExplorer\RegisterExplorer.exe
+```
+7. Click 'File', then Open, then Live System and click 'SAM'.
+8. Drill down to 'Root\SAM\Domains\Account\Users\Names'
+9. Observe listed names, look for anything out of place.
+10. Click 'File', then Open, then Live System and click 'Amcache'.
+11. Explore the entries listed here.
+12. Close registry explorer.
 
 ### KAPE
 1. Download KAPE:
@@ -71,15 +85,22 @@ C:\Working\Zimmerman\Net9\TimelineExplorer.exe
 https://www.kroll.com/en/services/cyber/incident-response-recovery/kroll-artifact-parser-and-extractor-kape
 ```
 2. Extract it to C:\Working\KAPE
-3. Run C:\Working\KAPE\GKAPE.exe
-4. Getting started. Show launching of Kape.
-   1. Show difference between GUI and command line Kape versions.
-5. Look at Targets.
-   1. Walk through configuration options of Targets.
-   2. Examine the data collected by Targets.
-6. Look at Modules.
-   1. Walk through configuration options of modules.
-   2. Examine the data collected by Modules.
+3. Run C:\Working\KAPE\GKAPE.exe to launch the GUI version of KAPE.
+4. Configure the target side to gather data from the system:
+```Powershell
+Target Source: C:\
+Target Destination: C:\Target_Dest (New Folder)
+Check: !Basic Collector and !SANS Triage
+```
+5. Configure the module side to process the collected data:
+```PowerShell
+Module Source: C:\Target_Dest
+Module Destination: C:\Module_Dest (New Folder)
+Check: !EZParser
+```
+6. Click 'Execute'.
+7. Explore the analyzed files using Timeline Explorer.
+
 
 ### Velociraptor
 1. Download velociraptor at the following URL:
