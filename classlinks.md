@@ -99,8 +99,8 @@ Module Destination: C:\Module_Dest (New Folder)
 Check: !EZParser
 ```
 6. Click 'Execute'.
-7. Explore the analyzed files using Timeline Explorer.
-
+7. Explore the analyzed files located in C:\Mod_dest using the TimelineExplorer.exe utility from earlier located in C:\Working\zimmerman\net9\TimelineExplorer.
+8. When done, close Timeline Explorer.
 
 ### Velociraptor
 1. Download velociraptor at the following URL:
@@ -117,12 +117,20 @@ Run the following command:
 ```powershell
 C:\working\velociraptor\velociraptor-v0.75.1-windows-amd64.exe config generate -i
 ```
-   1. Show how client config file is generated.
-   2. Start the server
+A wizard is started. Use the following answers:
+Self-signed certificate (Default) - Enter
+Change OS to Windows - Enter
+Defaults for everything else is fine.
+
+4. Generate a client config file:
 ```powershell
-.\velociraptor-v0.74.5-windows-amd64.exe --config .\server.config.yaml frontend -v
+C:\working\velociraptor\velociraptor-v0.75.1-windows-amd64.exe --config .\server.config.yaml config client > client.config.yaml
+```
+   1. Start the server
+```powershell
+c:\working\velociraptor\velociraptor-v0.75.1-windows-amd64.exe --config .\server.config.yaml frontend -v
 ```
 1. Fire up client. Show bubbles going green.
 ```powershell
-.\velociraptor-v0.74.5-windows-amd64.exe --config .\client.config.yaml pool_client --number 100
+c:\working\velociraptor\velociraptor-v0.75.1-windows-amd64.exe --config .\client.config.yaml pool_client --number 100
 ```
